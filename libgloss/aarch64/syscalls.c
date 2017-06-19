@@ -449,6 +449,7 @@ _swilseek (int fd, int ptr, int dir)
     return -1;
 }
 
+int
 _lseek (int fd, int ptr, int dir)
 {
   return _swilseek (fd, ptr, dir);
