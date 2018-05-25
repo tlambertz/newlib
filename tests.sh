@@ -35,7 +35,7 @@ apt-get -qq update
 apt-get install -y wget curl gnupg checkinstall gawk dialog apt-utils flex bison binutils texinfo gcc g++ libmpfr-dev libmpc-dev libgmp-dev libisl-dev packaging-dev build-essential libtool autotools-dev autoconf pkg-config apt-transport-https
 
 echo "deb https://packagecloud.io/hermitcore/stable/$OS_NAME $OS_VERSION main" | tee -a /etc/apt/sources.list
-curl -L https://packagecloud.io/hermitcore/main/gpgkey | sudo apt-key add -
+curl -L https://packagecloud.io/hermitcore/stable/gpgkey | sudo apt-key add -
 apt-get update
 apt-get install -y --allow-unauthenticated binutils-hermit gcc-hermit-bootstrap
 export PATH=/opt/hermit/bin:$PATH
