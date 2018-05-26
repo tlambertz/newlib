@@ -22,7 +22,7 @@
 
      "files":
      [{
-       "includePattern": "../(binutils[^/]*deb$)", "uploadPattern": "$1",
+       "includePattern": "../(newlib[^/]*deb$)", "uploadPattern": "$1",
        "matrixParams": {
          "deb_distribution": "vivid",
          "deb_component": "main",
