@@ -39,6 +39,10 @@ apt-get update
 apt-get install -y --allow-unauthenticated binutils-hermit gcc-hermit-bootstrap
 export PATH=/opt/hermit/bin:$PATH
 
+if [ "$OS_NAME" = "ubuntu" ]; then
+apt-get install -y libmpfr4
+fi
+
 export CROSSCOMPREFIX=x86_64-hermit
 export STACKPROT=-fno-stack-protector
 export CFLAGS_FOR_TARGET="-m64 -mtls-direct-seg-refs -O3 -ftree-vectorize"
