@@ -50,7 +50,7 @@ mkdir -p build
 cd build
 ../configure --target=x86_64-hermit --disable-shared --disable-multilib --disable-multilib --enable-lto --enable-newlib-hw-fp --enable-newlib-io-c99-formats --enable-newlib-multithread --disable-multilib --prefix=/opt/hermit #--enable-newlib-reent-small
 make -j2
-checkinstall -D -y --exclude=build --pkggroup=main --maintainer=stefan@eonerc.rwth-aachen.de --pkgsource=https://hermitcore.org --pkgname=newlib-hermit --pkgversion=2.4.0 --pkglicense=BSD-3-Clause make install
+checkinstall -D -y --exclude=build --pkggroup=main --maintainer=stefan@eonerc.rwth-aachen.de --pkgsource=https://hermitcore.org --pkgname=newlib-hermit --pkgversion=2.4.0 --conflicts=newlib-hermit-rs --pkglicense=BSD-3-Clause make install
 
 cd ..
 mkdir -p tmp
