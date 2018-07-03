@@ -32,94 +32,23 @@
 #include <sys/time.h>
 #include <sys/times.h>
 #include <errno.h>
-#include "warning.h"
-
-#ifdef __x86_64__
-
-extern unsigned int get_cpufreq(void);
-static unsigned long long start_tsc;
-static unsigned long long freq = 0;
-
-inline static unsigned long long rdtsc(void)
-{
-	unsigned int lo, hi;
-
-	asm volatile ("rdtsc" : "=a"(lo), "=d"(hi) :: "memory");
-
-	return ((unsigned long long)hi << 32ULL | (unsigned long long)lo);
-}
-
-__attribute__((constructor)) static void gettod_init(void)
-{
-	start_tsc = rdtsc();
-	freq = get_cpufreq() * 1000000ULL;
-}
-
-#elif defined(__aarch64__)
-
-static unsigned long long start_tsc;
-static unsigned long long freq = 0;
-
-static inline unsigned long long get_cntpct(void)
-{
-	unsigned long long value;
-	asm volatile("mrs %0, cntpct_el0" : "=r" (value) :: "memory");
-	return value;
-}
-
-static inline unsigned int get_cntfrq(void)
-{
-	unsigned int val;
-	asm volatile("mrs %0, cntfrq_el0" : "=r" (val) :: "memory");
-	return val;
-}
-
-__attribute__((constructor)) static void gettod_init(void)
-{
-	start_tsc = get_cntpct();
-	freq = get_cntfrq();
-}
-#endif
+#include "syscall.h"
 
 int
-gettimeofday (struct timeval *ptimeval, void *ptimezone)
+gettimeofday (struct timeval* ptimeval, void* ptimezone)
 {
 	return _gettimeofday_r(_REENT, ptimeval, ptimezone);
 }
 
 int
-_gettimeofday_r (struct _reent *ptr, struct timeval *ptimeval, void *ptimezone)
+_gettimeofday_r (struct _reent* ptr, struct timeval* ptimeval, void* ptimezone)
 {
-#ifdef __x86_64__
-	if (ptimeval) {
-		unsigned long long diff = rdtsc() - start_tsc;
-
-		ptimeval->tv_sec = diff / freq;
-		ptimeval->tv_usec = ((diff - ptimeval->tv_sec * freq) * 1000000ULL) / freq;
-	}
-
-	if (ptimezone) {
-		ptr->_errno = ENOSYS;
+	int ret = sys_gettimeofday((HermitTimeval*)ptimeval, ptimezone);
+	if (ret < 0)
+	{
+		ptr->_errno = -ret;
 		return -1;
 	}
 
-	return 0;
-#elif defined(__aarch64__)
-	if (ptimeval) {
-		unsigned long long diff = get_cntpct() - start_tsc;
-
-		ptimeval->tv_sec = diff / freq;
-		ptimeval->tv_usec = ((diff - ptimeval->tv_sec * freq) * 1000000ULL) / freq;
-	}
-
-	if (ptimezone) {
-		ptr->_errno = ENOSYS;
-		return -1;
-	}
-
-	return 0;
-#else
-	ptr->_errno = ENOSYS;
-	return -1;
-#endif
+	return ret;
 }

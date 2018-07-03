@@ -4,7 +4,7 @@ AM_CCASFLAGS = $(INCLUDES)
  
 noinst_LIBRARIES = lib.a
 
-lib_a_SOURCES = errno.c chown.c environ.c execve.c fork.c getpid.c kill.c lseek.c readlink.c stat.c times.c wait.c close.c _exit.c fstat.c gettod.c isatty.c link.c open.c read.c sbrk.c symlink.c unlink.c write.c signal.c
+lib_a_SOURCES = chown.c clock_getres.c clock_gettime.c clock_nanosleep.c clock_settime.c close.c environ.c errno.c execve.c _exit.c fork.c fstat.c getpagesize.c getpid.c gettod.c isatty.c kill.c link.c lseek.c nanosleep.c open.c read.c readlink.c sbrk.c signal.c stat.c symlink.c sysconf.c times.c unlink.c wait.c write.c
 lib_a_CCASFLAGS = $(AM_CCASFLAGS)
 lib_a_CFLAGS = $(AM_CFLAGS)
  

@@ -232,7 +232,8 @@ int sigpause (int);
 int sigaltstack (const stack_t *__restrict, stack_t *__restrict);
 #endif
 
-#if __POSIX_VISIBLE >= 199506
+/* HermitCore defines pthread_kill in its pthread.h, so don't redefine it here. */
+#if __POSIX_VISIBLE >= 199506 && !defined(__hermit__)
 int pthread_kill (pthread_t thread, int sig);
 #endif
 

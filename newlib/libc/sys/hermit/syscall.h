@@ -54,10 +54,36 @@ typedef unsigned int tid_t;
 extern "C" {
 #endif
 
-struct sem;
-typedef struct sem sem_t;
+/* Opaque structures (may point to Rust structures or be used to not clash with types defined by the C library) */
+struct _HermitRecursiveMutex;
+typedef struct _HermitRecursiveMutex HermitRecursiveMutex;
 
+struct _HermitSemaphore;
+typedef struct _HermitSemaphore HermitSemaphore;
+
+struct _HermitSpinlock;
+typedef struct _HermitSpinlock HermitSpinlock;
+
+struct _HermitSpinlockIrqSave;
+typedef struct _HermitSpinlockIrqSave HermitSpinlockIrqSave;
+
+struct _HermitTimespec;
+typedef struct _HermitTimespec HermitTimespec;
+
+struct _HermitTimeval;
+typedef struct _HermitTimeval HermitTimeval;
+
+
+typedef void (*entry_point_t)(void*);
 typedef void (*signal_handler_t)(int);
+
+
+/* Task priorities */
+#define HIGH_PRIO	3
+#define NORMAL_PRIO	2
+#define LOW_PRIO	1
+#define IDLE_PRIO	0
+
 
 /*
  * HermitCore is a libOS.
@@ -76,22 +102,53 @@ ssize_t sys_write(int fd, const char* buf, size_t len);
 ssize_t sys_sbrk(ssize_t incr);
 int sys_open(const char* name, int flags, int mode);
 int sys_close(int fd);
+void sys_putchar(const unsigned char character);
+int sys_lwip_get_errno();
+void sys_lwip_register_tcpip_task(tid_t id);
+void sys_lwip_set_errno(int errno);
+void sys_usleep(unsigned long usecs);
+int sys_nanosleep(const HermitTimespec* rqtp, HermitTimespec* rmtp);
 void sys_msleep(unsigned int ms);
-int sys_sem_init(sem_t** sem, unsigned int value);
-int sys_sem_destroy(sem_t* sem);
-int sys_sem_wait(sem_t* sem);
-int sys_sem_post(sem_t* sem);
-int sys_sem_timedwait(sem_t *sem, unsigned int ms);
-int sys_sem_cancelablewait(sem_t* sem, unsigned int ms);
+int sys_recmutex_init(HermitRecursiveMutex** recmutex);
+int sys_recmutex_destroy(HermitRecursiveMutex* recmutex);
+int sys_recmutex_lock(HermitRecursiveMutex* recmutex);
+int sys_recmutex_unlock(HermitRecursiveMutex* recmutex);
+int sys_sem_init(HermitSemaphore** sem, unsigned int value);
+int sys_sem_destroy(HermitSemaphore* sem);
+int sys_sem_post(HermitSemaphore* sem);
+int sys_sem_trywait(HermitSemaphore* sem);
+int sys_sem_timedwait(HermitSemaphore *sem, unsigned int ms);
+#define sys_sem_wait(sem)	sys_sem_timedwait(sem, 0)
+int sys_sem_cancelablewait(HermitSemaphore* sem, unsigned int ms);
+int sys_spinlock_init(HermitSpinlock** lock);
+int sys_spinlock_destroy(HermitSpinlock* lock);
+int sys_spinlock_lock(HermitSpinlock* lock);
+int sys_spinlock_unlock(HermitSpinlock* lock);
+int sys_spinlock_irqsave_init(HermitSpinlockIrqSave** lock);
+int sys_spinlock_irqsave_destroy(HermitSpinlockIrqSave* lock);
+int sys_spinlock_irqsave_lock(HermitSpinlockIrqSave* lock);
+int sys_spinlock_irqsave_unlock(HermitSpinlockIrqSave* lock);
+int sys_spawn(tid_t* id, entry_point_t func, void* arg, unsigned char prio, unsigned int core_id);
+int sys_clock_getres(unsigned long clock_id, HermitTimespec* res);
+int sys_clock_gettime(unsigned long clock_id, HermitTimespec* tp);
+int sys_clock_nanosleep(unsigned long clock_id, int flags, const HermitTimespec* rqtp, HermitTimespec* rmtp);
+int sys_clock_settime(unsigned long clock_id, const HermitTimespec* tp);
 int sys_clone(tid_t* id, void* ep, void* argv);
+int sys_getpagesize(void);
+int sys_gettimeofday(HermitTimeval* tp, void* tz);
 off_t sys_lseek(int fd, off_t offset, int whence);
-size_t sys_get_ticks(void);
-int sys_rcce_init(int session_id);
-size_t sys_rcce_malloc(int session_id, int ue);
-int sys_rcce_fini(int session_id);
 void sys_yield(void);
 int sys_kill(tid_t dest, int signum);
 int sys_signal(signal_handler_t handler);
+unsigned int sys_rand();
+
+struct ucontext;
+typedef struct ucontext ucontext_t;
+
+void makecontext(ucontext_t *ucp, void (*func)(), int argc, ...);
+int swapcontext(ucontext_t *oucp, const ucontext_t *ucp);
+int getcontext(ucontext_t *ucp);
+int setcontext(ucontext_t *ucp);
 
 #define __NR_exit 		0
 #define __NR_write		1
