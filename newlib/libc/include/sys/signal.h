@@ -147,6 +147,16 @@ struct sigaction
 
 #endif
 
+#if defined(__hermit__)
+/*
+ * Possible values for ss_flags in stack_t below.
+ */
+#define SS_ONSTACK	0x1
+#define SS_DISABLE	0x2
+
+#define SA_ONSTACK	0x4	/* Signal delivery will be on a separate stack. */
+#endif
+
 /*
  * Structure used in sigaltstack call.
  */
