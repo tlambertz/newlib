@@ -34,16 +34,13 @@
 #include "warning.h"
 
 int
-_DEFUN (close, (fildes),
-        int fildes)
+close (int fildes)
 {
 	return _close_r(_REENT, fildes);
 }
 
 int
-_DEFUN (_close_r, (ptr, fildes),
-	struct _reent *ptr _AND
-        int fildes)
+_close_r (struct _reent* ptr, int fildes)
 {
 	int ret;
 

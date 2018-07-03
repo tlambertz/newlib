@@ -70,25 +70,19 @@ newlib_signal_dispatcher(int signum)
 }
 
 int
-_DEFUN(pthread_sigmask, (how, set, oset),
-	int how _AND
-	const sigset_t *set _AND
-	sigset_t *oset)
+pthread_sigmask (int how, const sigset_t* set, sigset_t* oset)
 {
 	return ENOSYS;
 }
 
 int
-_DEFUN(sigaltstack, (ss, os),
-	const stack_t * ss _AND
-	stack_t * oss)
+sigaltstack (const stack_t* ss, stack_t* oss)
 {
 	return ENOSYS;
 }
 
 int
-_DEFUN (_init_signal_r, (ptr),
-	struct _reent *ptr)
+_init_signal_r (struct _reent* ptr)
 {
 	int i;
 
@@ -110,10 +104,7 @@ _DEFUN (_init_signal_r, (ptr),
 }
 
 _sig_func_ptr
-_DEFUN (_signal_r, (ptr, sig, func),
-	struct _reent *ptr _AND
-	int sig _AND
-	_sig_func_ptr func)
+_signal_r (struct _reent* ptr, int sig, _sig_func_ptr func)
 {
 	_sig_func_ptr old_func;
 
@@ -133,11 +124,7 @@ _DEFUN (_signal_r, (ptr, sig, func),
 }
 
 int
-_DEFUN(_sigaction_r, (ptr, int, const struct sigaction *, struct sigaction *),
-	struct _reent *ptr _AND
-	int sig _AND
-	const struct sigaction * act _AND
-	struct sigaction * oact)
+_sigaction_r (struct _reent* ptr, int sig, const struct sigaction* act, struct sigaction* oact)
 {
 	return 0;
 }
@@ -145,24 +132,19 @@ _DEFUN(_sigaction_r, (ptr, int, const struct sigaction *, struct sigaction *),
 #ifndef _REENT_ONLY
 
 int
-_DEFUN(sigaction, (int, const struct sigaction *, struct sigaction *),
-	int sig _AND
-	const struct sigaction * act _AND
-	struct sigaction * oact)
+sigaction (int sig, const struct sigaction* act, struct sigaction* oact)
 {
 	return _sigaction_r (_REENT, sig, act, oact);
 }
 
 _sig_func_ptr
-_DEFUN (signal, (sig, func),
-	int sig _AND
-	_sig_func_ptr func)
+signal (int sig, _sig_func_ptr func)
 {
 	return _signal_r (_REENT, sig, func);
 }
 
 int 
-_DEFUN_VOID (_init_signal)
+_init_signal (void)
 {
 	return _init_signal_r (_REENT);
 }

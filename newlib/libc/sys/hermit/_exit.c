@@ -32,9 +32,8 @@
 #include <errno.h>
 #include "syscall.h"
 
-_VOID
-_DEFUN (_exit, (rc),
-	int rc)
+void
+_exit (int rc)
 {
 	/* task exit */
 	sys_exit(rc);

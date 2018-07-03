@@ -34,16 +34,13 @@
 #include "warning.h"
 
 int
-_DEFUN (wait, (status),
-	int  *status)
+wait (int* status)
 {
 	return _wait_r(_REENT, status);
 }
 
 int
-_DEFUN (_wait_r, (ptr, status),
-	struct _reent *ptr _AND
-        int  *status)
+_wait_r (struct _reent* ptr, int* status)
 {
 	int ret;
 

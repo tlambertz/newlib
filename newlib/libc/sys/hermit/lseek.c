@@ -34,22 +34,15 @@
 #include "warning.h"
 
 _off_t
-_DEFUN (lseek, (file, ptr, dir),
-	int		file  _AND
-	_off_t		ptr   _AND
-	int		dir)
+lseek (int file, _off_t ptr, int dir)
 {
 	return _lseek_r(_REENT, file, ptr, dir);
 }
 
 _off_t
-_DEFUN (_lseek_r, (p, file, ptr, dir),
-	struct _reent	*p _AND
-        int		file  _AND
-        _off_t		ptr   _AND
-        int		dir)
+_lseek_r (struct _reent* p, int file, _off_t ptr, int dir)
 {
-	int ret;	
+	int ret;
 
 	ret = sys_lseek(file, ptr, dir);
 	if (ret < 0) {

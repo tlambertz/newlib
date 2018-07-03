@@ -33,16 +33,13 @@
 #include "warning.h"
 
 int
-_DEFUN (isatty, (file),
-        int file)
+isatty (int file)
 {
 	return _isatty_r(_REENT, file);
 }
 
 int
-_DEFUN (_isatty_r, (ptr, file),
-	struct _reent *ptr _AND
-        int file)
+_isatty_r (struct _reent *ptr, int file)
 {
 	return (file < 3);
 }

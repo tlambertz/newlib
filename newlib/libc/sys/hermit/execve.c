@@ -34,20 +34,13 @@
 #include "warning.h"
 
 int
-_DEFUN (execve, (name, argv, env),
-        const char  * name  _AND
-        char * const * argv  _AND
-        char * const * env)
+execve (const char* name, char* const* argv, char* const* env)
 {
 	return _execve_r(_REENT, name, argv, env);
 }
 
 int
-_DEFUN (_execve_r, (ptr, name, argv, env),
-	struct _reent * ptr _AND
-        const char  * name  _AND
-        char * const * argv  _AND
-        char * const * env)
+_execve_r (struct _reent* ptr, const char* name, char* const* argv, char* const* env)
 {
 	int ret;
 

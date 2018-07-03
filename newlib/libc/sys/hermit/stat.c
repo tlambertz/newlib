@@ -40,18 +40,13 @@
 #include "warning.h"
 
 int
-_DEFUN (stat, (file, st),
-        const char  *file _AND
-        struct stat *st)
+stat (const char* file, struct stat* st)
 {
 	return _stat_r(_REENT, file, st);
 }
 
 int
-_DEFUN (_stat_r, (ptr, file, st),
-	struct _reent *ptr _AND
-        const char  *file _AND
-        struct stat *st)
+_stat_r (struct _reent* ptr, const char* file, struct stat* st)
 {
 	int ret;
 

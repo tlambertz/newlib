@@ -34,20 +34,13 @@
 #include "warning.h"
 
 _ssize_t
-_DEFUN (write, (file, ptr, len),
-	int   file  _AND
-	const void *ptr   _AND
-	size_t  len)
+write (int file, const void* ptr, size_t len)
 {
 	return _write_r(_REENT, file, ptr, len);
 }
 
 _ssize_t
-_DEFUN (_write_r, (r, file, ptr, len),
-	struct _reent *r _AND
-        int   file  _AND
-        const void *ptr   _AND
-        size_t  len)
+_write_r (struct _reent* r, int file, const void* ptr, size_t len)
 {
 	int ret;
 

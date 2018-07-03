@@ -34,15 +34,13 @@
 #include "warning.h"
 
 int
-_DEFUN (getpid, (),
-	)
+getpid (void)
 {
 	return _getpid_r(_REENT);
 }
 
 int
-_DEFUN (_getpid_r, (ptr),
-        struct _reent *ptr)
+_getpid_r (struct _reent* ptr)
 {
 	int ret;
 

@@ -82,18 +82,13 @@ __attribute__((constructor)) static void gettod_init(void)
 #endif
 
 int
-_DEFUN (gettimeofday, (ptimeval, ptimezone),
-        struct timeval  *ptimeval  _AND
-        void *ptimezone)
+gettimeofday (struct timeval *ptimeval, void *ptimezone)
 {
 	return _gettimeofday_r(_REENT, ptimeval, ptimezone);
 }
 
 int
-_DEFUN (_gettimeofday_r, (ptr, ptimeval, ptimezone),
-	struct _reent *ptr _AND
-        struct timeval  *ptimeval  _AND
-        void *ptimezone)
+_gettimeofday_r (struct _reent *ptr, struct timeval *ptimeval, void *ptimezone)
 {
 #ifdef __x86_64__
 	if (ptimeval) {

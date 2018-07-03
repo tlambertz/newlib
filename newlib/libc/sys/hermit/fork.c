@@ -34,8 +34,7 @@
 #include "warning.h"
 
 int
-_DEFUN (_fork_r, (ptr),
-        struct _reent *ptr)
+_fork_r (struct _reent *ptr)
 {
 	int ret;
 

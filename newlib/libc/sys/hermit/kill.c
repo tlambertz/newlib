@@ -36,9 +36,7 @@
 #include "syscall.h"
 
 int
-_DEFUN (kill, (pid, sig),
-	int pid  _AND
-	int sig)
+kill (int pid, int sig)
 {
 	return _kill_r(_REENT, pid, sig);
 }
@@ -47,10 +45,7 @@ int kputs(char*);
 int kprintf(char*, ...);
 
 int
-_DEFUN (_kill_r, (ptr, pid, sig),
-	struct _reent *ptr _AND
-        int pid  _AND
-        int sig)
+_kill_r (struct _reent *ptr, int pid, int sig)
 {
 	if (sig < 0 || sig >= NSIG)
 	{

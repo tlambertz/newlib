@@ -33,16 +33,13 @@
 #include "warning.h"
 
 void*
-_DEFUN (sbrk, (incr),
-	ptrdiff_t incr)
+sbrk (ptrdiff_t incr)
 {
 	return _sbrk_r(_REENT, incr);
 }
 
 void*
-_DEFUN (_sbrk_r, (ptr, incr),
-	struct _reent *ptr _AND
-	ptrdiff_t incr)
+_sbrk_r (struct _reent* ptr, ptrdiff_t incr)
 {
 	ssize_t ret = sys_sbrk(incr);
 	if (ret <= 0) {

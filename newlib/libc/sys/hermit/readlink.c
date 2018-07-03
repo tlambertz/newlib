@@ -35,21 +35,14 @@
 
 #if 0
 int
-_DEFUN (readlink, (path, buf, bufsize),
-        const char *path _AND
-        char *buf _AND
-        size_t bufsize)
+readlink (const char* path, char* buf, size_t bufsize)
 {
 	return _readlink_r(_REENT, path, buf, bufsize);
 }
 #endif
 
 int
-_DEFUN (_readlink_r, (ptr, path, buf, bufsize),
-	struct _reent *ptr _AND
-        const char *path _AND
-        char *buf _AND
-        size_t bufsize)
+_readlink_r (struct _reent* ptr, const char* path, char* buf, size_t bufsize)
 {
   ptr->_errno = ENOSYS;
   return -1;

@@ -33,18 +33,13 @@
 #include "warning.h"
 
 int
-_DEFUN (link, (existing, new),
-	const char *existing _AND
-	const char *new)
+link (const char* existing, const char* new)
 {
 	return _link_r(_REENT, existing, new);
 }
 
 int
-_DEFUN (_link_r, (ptr, existing, new),
-	struct _reent *ptr _AND
-        const char *existing _AND
-        const char *new)
+_link_r (struct _reent *ptr, const char* existing, const char* new)
 {
 	ptr->_errno = EMLINK;
 	return -1;

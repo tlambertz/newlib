@@ -34,20 +34,13 @@
 #include "warning.h"
 
 int
-_DEFUN (open, (file, flags, mode),
-	const char *file  _AND
-	int   flags _AND
-	int   mode)
+open (const char *file, int flags, int mode)
 {
 	return _open_r(_REENT, file, flags, mode);
 }
 
 int
-_DEFUN (_open_r, (ptr, file, flags, mode),
-	struct _reent *ptr _AND
-        const char *file  _AND
-        int   flags _AND
-        int   mode)
+_open_r (struct _reent *ptr, const char *file, int flags, int mode)
 {
 	int ret;
 

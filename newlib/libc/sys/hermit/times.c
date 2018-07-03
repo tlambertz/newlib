@@ -33,16 +33,13 @@
 #include <errno.h>
 
 clock_t
-_DEFUN (times, (buf),
-	struct tms *buf)
+times (struct tms *buf)
 {
 	return _times_r(_REENT, buf);
 }
 
 clock_t
-_DEFUN (_times_r, (ptr, buf),
-	struct _reent *ptr _AND
-        struct tms *buf)
+_times_r (struct _reent *ptr, struct tms *buf)
 {
 	ptr->_errno = EACCES;
 	return -1;
