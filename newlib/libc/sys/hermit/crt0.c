@@ -37,8 +37,6 @@ extern void __libc_fini_array (void);
 extern int _init_signal(void);
 extern char** environ;
 
-#define PHYS	0x800000ULL
-
 int libc_start(int argc, char** argv, char** env)
 {
    int ret;
@@ -68,25 +66,3 @@ int libc_start(int argc, char** argv, char** env)
    /* we should never reach this point */
    return 0;
 }
-
-#ifdef __x86_64__
-int get_cpufreq(void)
-{
-   return *((int*) (PHYS + 0x18));
-}
-
-int isle_id(void)
-{
-   return *((int*) (PHYS + 0x34));
-}
-
-int get_num_cpus(void)
-{
-   return *((int*) (PHYS + 0x20));
-}
-#elif defined(__x86_64__)
-int get_num_cpus(void)
-{
-   return *((int*) (PHYS + 0x120));
-}
-#endif
