@@ -9,7 +9,7 @@
          "vcs_url": "https://github.com/hermitcore/newlib.git",
          "github_use_tag_release_notes": false,
          "github_release_notes_file": "RELEASE",
-         "licenses": ["GPL2"],
+         "licenses": ["BSD-3-Clause"],
          "public_download_numbers": false,
          "public_stats": false
      },
@@ -17,12 +17,12 @@
      "version": {
          "name": "2.4.0",
          "desc": "HermitCore's C Library",
-	 "gpgSign": false
+         "gpgSign": false
      },
 
      "files":
      [{
-       "includePattern": "../(newlib[^/]*deb$)", "uploadPattern": "$1",
+       "includePattern": "../(newlib-hermit_[^/]*deb$)", "uploadPattern": "$1",
        "matrixParams": {
          "deb_distribution": "bionic",
          "deb_component": "main",
@@ -30,4 +30,4 @@
          "override": 1}
      }],
      "publish": true
- }
+}
