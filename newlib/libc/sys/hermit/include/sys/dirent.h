@@ -7,8 +7,6 @@
  * Sean Eric Fagan, sef@Kithrup.COM
  */
 
-#include <hermit/config.h>
-
 typedef struct _dirdesc {
 	int	dd_fd;
 	long	dd_loc;
@@ -32,7 +30,7 @@ typedef struct dirent {
 	off_t	d_off;
 	unsigned short	d_reclen;
 	/* we need better syntax for variable-sized arrays */
-	char	d_name[MAX_FNAME];
+	char	d_name[256];
 } dirent_t;
 
 #endif
