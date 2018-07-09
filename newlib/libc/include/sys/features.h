@@ -553,6 +553,7 @@ extern "C" {
 #define _POSIX_TIMERS				1
 #define _POSIX_CLOCK_SELECTION		200809L
 #define _POSIX_MONOTONIC_CLOCK		200809L
+#define _POSIX_PRIORITY_SCHEDULING	200809L
 
 #endif /* __hermit__ */
 

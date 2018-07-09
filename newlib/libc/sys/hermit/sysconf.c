@@ -38,6 +38,7 @@ sysconf (int name)
 		case _SC_NPROCESSORS_CONF: return sys_get_number_of_processors();
 		case _SC_NPROCESSORS_ONLN: return sys_get_number_of_processors();
 		case _SC_PAGESIZE: return sys_getpagesize();
+		case _SC_PRIORITY_SCHEDULING: return 1;
 		case _SC_THREAD_DESTRUCTOR_ITERATIONS: return PTHREAD_DESTRUCTOR_ITERATIONS;
 		case _SC_THREAD_KEYS_MAX: return PTHREAD_KEYS_MAX;
 		case _SC_THREAD_STACK_MIN: return PTHREAD_STACK_MIN;
