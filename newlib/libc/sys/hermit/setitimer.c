@@ -28,7 +28,7 @@
 int
 setitimer (int which, const struct itimerval* value, struct itimerval* ovalue)
 {
-	int ret = sys_getitimer(which, (const HermitItimerval*)value, (HermitItimerval*)ovalue);
+	int ret = sys_setitimer(which, (const HermitItimerval*)value, (HermitItimerval*)ovalue);
 	if (ret < 0)
 	{
 		*__errno() = -ret;
