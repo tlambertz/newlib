@@ -31,12 +31,12 @@ else
 
 export DEBIAN_FRONTEND="noninteractive"
 
-apt-get -qq update
-apt-get install -y wget curl gnupg checkinstall gawk dialog apt-utils flex bison binutils texinfo gcc g++ libmpfr-dev libmpc-dev libgmp-dev libisl-dev packaging-dev build-essential libtool autotools-dev autoconf pkg-config apt-transport-https
+apt-get -qq update || exit 1
+apt-get install -y --no-install-recommends checkinstall gcc libc-dev || exit 1
 
-echo "deb [trusted=yes] https://dl.bintray.com/hermitcore/ubuntu bionic main" | tee -a /etc/apt/sources.list
-apt-get update
-apt-get install -y --allow-unauthenticated binutils-hermit gcc-hermit-bootstrap
+echo "deb [trusted=yes] http://dl.bintray.com/hermitcore/ubuntu bionic main" >> /etc/apt/sources.list
+apt-get update || exit 1
+apt-get install -y --allow-unauthenticated binutils-hermit gcc-hermit-bootstrap || exit 1
 export PATH=/opt/hermit/bin:$PATH
 
 export CROSSCOMPREFIX=x86_64-hermit
@@ -48,9 +48,9 @@ export CXXFLAGS_FOR_TARGET="-m64 -mtls-direct-seg-refs -O3 -ftree-vectorize"
 
 mkdir -p build
 cd build
-../configure --target=x86_64-hermit --disable-shared --disable-multilib --disable-multilib --enable-lto --enable-newlib-hw-fp --enable-newlib-io-c99-formats --enable-newlib-multithread --disable-multilib --prefix=/opt/hermit #--enable-newlib-reent-small
-make -j2
-checkinstall -D -y --exclude=build --pkggroup=main --maintainer=stefan@eonerc.rwth-aachen.de --pkgsource=https://hermitcore.org --pkgname=newlib-hermit-rs --pkgversion=3.0.0 --conflicts=newlib-hermit --pkglicense=BSD-3-Clause make install
+../configure --target=x86_64-hermit --disable-shared --disable-multilib --disable-multilib --enable-lto --enable-newlib-hw-fp --enable-newlib-io-c99-formats --enable-newlib-multithread --disable-multilib --prefix=/opt/hermit || exit 1
+make -j2 || exit 1
+checkinstall -D -y --exclude=build --pkggroup=main --maintainer=stefan@eonerc.rwth-aachen.de --pkgsource=https://hermitcore.org --pkgname=newlib-hermit-rs --pkgversion=3.0.0 --conflicts=newlib-hermit --pkglicense=BSD-3-Clause make install || exit 1
 
 cd ..
 mkdir -p tmp
