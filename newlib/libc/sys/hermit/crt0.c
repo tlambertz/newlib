@@ -84,7 +84,7 @@ int get_num_cpus(void)
 {
    return *((int*) (PHYS + 0x20));
 }
-#elif defined(__x86_64__)
+#elif defined(__aarch64__)
 int get_num_cpus(void)
 {
    return *((int*) (PHYS + 0x120));
