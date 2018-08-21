@@ -15,9 +15,9 @@ CONFIG_STATUS_DEPENDENCIES = $(newlib_basedir)/configure.host
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(tooldir)/include/netinet; \
-        for i in $(srcdir)/include/netinet/*.h; do \
-          $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/netinet/`basename $$i`; \
-        done; \
+	for i in $(srcdir)/include/netinet/*.h; do \
+	  $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/netinet/`basename $$i`; \
+	done; \
 	$(mkinstalldirs) $(DESTDIR)$(tooldir)/include/arch; \
 	for i in $(srcdir)/include/arch/*.h; do \
 	  $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/arch/`basename $$i`; \
