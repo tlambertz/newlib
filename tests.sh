@@ -50,11 +50,11 @@ mkdir -p build
 cd build
 ../configure --target=x86_64-hermit --disable-shared --disable-multilib --disable-multilib --enable-lto --enable-newlib-hw-fp --enable-newlib-io-c99-formats --enable-newlib-multithread --disable-multilib --prefix=/opt/hermit || exit 1
 make -j2 || exit 1
-checkinstall -D -y --exclude=build --pkggroup=main --maintainer=stefan@eonerc.rwth-aachen.de --pkgsource=https://hermitcore.org --pkgname=newlib-hermit-rs --pkgversion=3.0.0 --conflicts=newlib-hermit --pkglicense=BSD-3-Clause make install || exit 1
+checkinstall -D -y --exclude=build --pkggroup=main --maintainer=stefan@eonerc.rwth-aachen.de --pkgsource=https://hermitcore.org --pkgname=newlib-hermit-rs --pkgversion=3.0.1 --conflicts=newlib-hermit --pkglicense=BSD-3-Clause make install || exit 1
 
 cd ..
 mkdir -p tmp
-dpkg-deb -R build/newlib-hermit-rs_3.0.0-1_amd64.deb tmp
-rm -f build/newlib-hermit-rs_3.0.0-1_amd64.deb
+dpkg-deb -R build/newlib-hermit-rs_3.0.1-1_amd64.deb tmp
+rm -f build/newlib-hermit-rs_3.0.1-1_amd64.deb
 
 fi
