@@ -54,7 +54,7 @@ int libc_start(int argc, char** argv, char** env)
       environ = env;
 
    /* initialize simple signal handling */
-   _init_signal();
+   //_init_signal();
 
    ret = main(argc, argv);
 

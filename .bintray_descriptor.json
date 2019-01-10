@@ -15,7 +15,7 @@
      },
 
      "version": {
-         "name": "3.0.0",
+         "name": "3.0.1",
          "desc": "HermitCore's C Library",
          "gpgSign": false
      },

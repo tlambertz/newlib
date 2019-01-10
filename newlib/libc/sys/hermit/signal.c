@@ -37,6 +37,7 @@
  *	- man 7 signal
 */
 
+#if 0
 static void
 newlib_signal_dispatcher(int signum)
 {
@@ -68,6 +69,7 @@ newlib_signal_dispatcher(int signum)
 		func(signum);
 	}
 }
+#endif
 
 int
 pthread_sigmask (int how, const sigset_t* set, sigset_t* oset)
@@ -84,6 +86,7 @@ sigaltstack (const stack_t* ss, stack_t* oss)
 int
 _init_signal_r (struct _reent* ptr)
 {
+#if 0
 	int i;
 
 	if (ptr->_sig_func == NULL) {
@@ -101,11 +104,15 @@ _init_signal_r (struct _reent* ptr)
 	}
 
 	return 0;
+#else
+	return ENOSYS;
+#endif
 }
 
 _sig_func_ptr
 _signal_r (struct _reent* ptr, int sig, _sig_func_ptr func)
 {
+#if 0
 	_sig_func_ptr old_func;
 
 	if (sig < 0 || sig >= NSIG) {
@@ -121,6 +128,9 @@ _signal_r (struct _reent* ptr, int sig, _sig_func_ptr func)
 	ptr->_sig_func[sig] = func;
 
 	return old_func;
+#else
+	return ENOSYS;
+#endif
 }
 
 int
@@ -143,10 +153,12 @@ signal (int sig, _sig_func_ptr func)
 	return _signal_r (_REENT, sig, func);
 }
 
+#if 0
 int 
 _init_signal (void)
 {
 	return _init_signal_r (_REENT);
 }
+#endif
 
 #endif
