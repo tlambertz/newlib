@@ -2,7 +2,7 @@
 
 /* Written 2018 by Stefan Lankes */
 
-void sys_msleep(unsigned int ms)
+void sys_msleep(unsigned int ms);
 
 unsigned int sleep(unsigned int seconds)
 {
