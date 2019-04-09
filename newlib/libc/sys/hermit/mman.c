@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *    * Redistributions of source code must retain the above copyright
- *      notice, this list of conditions and the following disclaimer.
- *    * Redistributions in binary form must reproduce the above copyright
- *      notice, this list of conditions and the following disclaimer in the
- *      documentation and/or other materials provided with the distribution.
- *    * Neither the name of the University nor the names of its contributors
- *      may be used to endorse or promote products derived from this
- *      software without specific prior written permission.
+ * * Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
+ * * Neither the name of the University nor the names of its contributors
+ *   may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -36,12 +36,31 @@
 #include "sys/mman.h"
 #define MAP_FAILED NULL
 
-void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
-{
+void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset) {
 	return MAP_FAILED;
 }
 
-int munmap(void *addr, size_t length)
-{
+int munmap(void *addr, size_t length) {
 	return -1;
 }
+
+int mlock(const void *, size_t);
+
+int mlockall(int);
+
+int mprotect(void *, size_t, int);
+
+int msync(void *, size_t, int);
+
+int munlock(const void *, size_t);
+
+int munlockall(void);
+
+/* int posix_madvise(void *, size_t, int); */
+
+/* int posix_mem_offset(const void *restrict, size_t, off_t *restrict, size_t *restrict, int *restrict); */
+/* int posix_typed_mem_get_info(int, struct posix_typed_mem_info *); */
+/* int posix_typed_mem_open(const char *, int, int); */
+
+/* int shm_open(const char *, int, mode_t); */
+/* int shm_unlink(const char *); */
