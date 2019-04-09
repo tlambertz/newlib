@@ -78,6 +78,14 @@
 #define F_SETLKW	7
 #endif
 
+/* fcntl(2) flags (l_type field of flock structure) */
+#define	F_RDLCK		1	/* read lock */
+#define	F_WRLCK		2	/* write lock */
+#define	F_UNLCK		3	/* remove lock(s) */
+#if __MISC_VISIBLE
+#define	F_UNLKSYS	4	/* remove remote locks for a given system */
+#endif	/* __MISC_VISIBLE */
+
 /* --- redundant stuff below --- */
 
 #include <_ansi.h>
