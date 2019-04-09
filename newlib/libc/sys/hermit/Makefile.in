@@ -70,18 +70,19 @@ ARFLAGS = cru
 lib_a_AR = $(AR) $(ARFLAGS)
 lib_a_LIBADD =
 am_lib_a_OBJECTS = lib_a-errno.$(OBJEXT) lib_a-chown.$(OBJEXT) \
-	lib_a-environ.$(OBJEXT) lib_a-execve.$(OBJEXT) \
-	lib_a-fork.$(OBJEXT) lib_a-getpid.$(OBJEXT) \
-	lib_a-mmap.$(OBJEXT) lib_a-getpid.$(OBJEXT) \
-	lib_a-kill.$(OBJEXT) lib_a-lseek.$(OBJEXT) \
-	lib_a-readlink.$(OBJEXT) lib_a-stat.$(OBJEXT) \
-	lib_a-times.$(OBJEXT) lib_a-wait.$(OBJEXT) \
-	lib_a-close.$(OBJEXT) lib_a-_exit.$(OBJEXT) \
-	lib_a-fstat.$(OBJEXT) lib_a-gettod.$(OBJEXT) \
-	lib_a-isatty.$(OBJEXT) lib_a-link.$(OBJEXT) \
-	lib_a-open.$(OBJEXT) lib_a-read.$(OBJEXT) lib_a-sbrk.$(OBJEXT) \
-	lib_a-symlink.$(OBJEXT) lib_a-unlink.$(OBJEXT) \
-	lib_a-write.$(OBJEXT) lib_a-signal.$(OBJEXT)
+	lib_a-environ.$(OBJEXT) lib_a-sleep.$(OBJEXT) \
+	lib_a-execve.$(OBJEXT) lib_a-fork.$(OBJEXT) \
+	lib_a-getpid.$(OBJEXT) lib_a-kill.$(OBJEXT) \
+	lib_a-lseek.$(OBJEXT) lib_a-readlink.$(OBJEXT) \
+	lib_a-stat.$(OBJEXT) lib_a-times.$(OBJEXT) \
+	lib_a-wait.$(OBJEXT) lib_a-close.$(OBJEXT) \
+	lib_a-_exit.$(OBJEXT) lib_a-fstat.$(OBJEXT) \
+	lib_a-gettod.$(OBJEXT) lib_a-isatty.$(OBJEXT) \
+	lib_a-link.$(OBJEXT) lib_a-open.$(OBJEXT) lib_a-read.$(OBJEXT) \
+	lib_a-sbrk.$(OBJEXT) lib_a-symlink.$(OBJEXT) \
+	lib_a-unlink.$(OBJEXT) lib_a-write.$(OBJEXT) \
+	lib_a-signal.$(OBJEXT) lib_a-mman.$(OBJEXT) \
+	lib_a-uio.$(OBJEXT) lib_a-ftruncate.$(OBJEXT)
 lib_a_OBJECTS = $(am_lib_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp =
@@ -130,7 +131,6 @@ LTLIBOBJS = @LTLIBOBJS@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
-NASM = @NASM@
 NEWLIB_CFLAGS = @NEWLIB_CFLAGS@
 NO_INCLUDE_LIST = @NO_INCLUDE_LIST@
 OBJEXT = @OBJEXT@
@@ -208,7 +208,7 @@ AUTOMAKE_OPTIONS = cygnus
 INCLUDES = $(NEWLIB_CFLAGS) $(CROSS_CFLAGS) $(TARGET_CFLAGS)
 AM_CCASFLAGS = $(INCLUDES)
 noinst_LIBRARIES = lib.a
-lib_a_SOURCES = errno.c chown.c environ.c execve.c fork.c getpid.c kill.c lseek.c readlink.c stat.c times.c wait.c close.c _exit.c fstat.c gettod.c isatty.c link.c open.c read.c sbrk.c symlink.c unlink.c write.c signal.c mmap.c
+lib_a_SOURCES = errno.c chown.c environ.c sleep.c execve.c fork.c getpid.c kill.c lseek.c readlink.c stat.c times.c wait.c close.c _exit.c fstat.c gettod.c isatty.c link.c open.c read.c sbrk.c symlink.c unlink.c write.c signal.c mman.c uio.c ftruncate.c
 lib_a_CCASFLAGS = $(AM_CCASFLAGS)
 lib_a_CFLAGS = $(AM_CFLAGS)
 ACLOCAL_AMFLAGS = -I ../../..
@@ -289,6 +289,12 @@ lib_a-environ.o: environ.c
 lib_a-environ.obj: environ.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-environ.obj `if test -f 'environ.c'; then $(CYGPATH_W) 'environ.c'; else $(CYGPATH_W) '$(srcdir)/environ.c'; fi`
 
+lib_a-sleep.o: sleep.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-sleep.o `test -f 'sleep.c' || echo '$(srcdir)/'`sleep.c
+
+lib_a-sleep.obj: sleep.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-sleep.obj `if test -f 'sleep.c'; then $(CYGPATH_W) 'sleep.c'; else $(CYGPATH_W) '$(srcdir)/sleep.c'; fi`
+
 lib_a-execve.o: execve.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-execve.o `test -f 'execve.c' || echo '$(srcdir)/'`execve.c
 
@@ -300,13 +306,6 @@ lib_a-fork.o: fork.c
 
 lib_a-fork.obj: fork.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-fork.obj `if test -f 'fork.c'; then $(CYGPATH_W) 'fork.c'; else $(CYGPATH_W) '$(srcdir)/fork.c'; fi`
-
-lib_a-mmap.o: mmap.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-mmap.o `test -f 'mmap.c' || echo '$(srcdir)/'`mmap.c
-
-lib_a-mmap.obj: mmap.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-mmap.obj `if test -f 'mmap.c'; then $(CYGPATH_W) 'mmap.c'; else $(CYGPATH_W) '$(srcdir)/mmap.c'; fi`
-
 
 lib_a-getpid.o: getpid.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-getpid.o `test -f 'getpid.c' || echo '$(srcdir)/'`getpid.c
@@ -427,6 +426,24 @@ lib_a-signal.o: signal.c
 
 lib_a-signal.obj: signal.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-signal.obj `if test -f 'signal.c'; then $(CYGPATH_W) 'signal.c'; else $(CYGPATH_W) '$(srcdir)/signal.c'; fi`
+
+lib_a-mman.o: mman.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-mman.o `test -f 'mman.c' || echo '$(srcdir)/'`mman.c
+
+lib_a-mman.obj: mman.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-mman.obj `if test -f 'mman.c'; then $(CYGPATH_W) 'mman.c'; else $(CYGPATH_W) '$(srcdir)/mman.c'; fi`
+
+lib_a-uio.o: uio.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-uio.o `test -f 'uio.c' || echo '$(srcdir)/'`uio.c
+
+lib_a-uio.obj: uio.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-uio.obj `if test -f 'uio.c'; then $(CYGPATH_W) 'uio.c'; else $(CYGPATH_W) '$(srcdir)/uio.c'; fi`
+
+lib_a-ftruncate.o: ftruncate.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-ftruncate.o `test -f 'ftruncate.c' || echo '$(srcdir)/'`ftruncate.c
+
+lib_a-ftruncate.obj: ftruncate.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-ftruncate.obj `if test -f 'ftruncate.c'; then $(CYGPATH_W) 'ftruncate.c'; else $(CYGPATH_W) '$(srcdir)/ftruncate.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -626,15 +643,14 @@ uninstall-am:
 all-local: crt0.o
 
 install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(tooldir)/include; \
 	$(mkinstalldirs) $(DESTDIR)$(tooldir)/include/netinet; \
-        for i in $(srcdir)/include/netinet/*.h; do \
-	      $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/netinet/`basename $$i`; \
-	    done; \
+	for i in $(srcdir)/include/netinet/*.h; do \
+	  $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/netinet/`basename $$i`; \
+	done; \
 	$(mkinstalldirs) $(DESTDIR)$(tooldir)/include/arch; \
-        for i in $(srcdir)/include/arch/*.h; do \
-          $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/arch/`basename $$i`; \
-        done; \
+	for i in $(srcdir)/include/arch/*.h; do \
+	  $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/arch/`basename $$i`; \
+	done; \
 	$(mkinstalldirs) $(DESTDIR)$(tooldir)/include/lwip; \
         for i in $(srcdir)/include/lwip/*.h; do \
           $(INSTALL_DATA) $$i $(DESTDIR)$(tooldir)/include/lwip/`basename $$i`; \
