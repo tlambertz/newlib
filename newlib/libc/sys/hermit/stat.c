@@ -13,18 +13,17 @@
  *      may be used to endorse or promote products derived from this
  *      software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 /*
  * Stub version of stat.
  */
@@ -39,32 +38,92 @@
 #include "syscall.h"
 #include "warning.h"
 
-int
-_DEFUN (stat, (file, st),
+int _DEFUN (stat, (file, st),
         const char  *file _AND
         struct stat *st)
 {
-	return _stat_r(_REENT, file, st);
+    return _stat_r(_REENT, file, st);
 }
 
-int
-_DEFUN (_stat_r, (ptr, file, st),
-	struct _reent *ptr _AND
-        const char  *file _AND
+int _DEFUN (_stat_r, (ptr, file, st),
+    struct _reent *ptr _AND
+    const char  *file _AND
+    struct stat *st)
+{
+    int ret;
+
+    if (!file && ! st) {
+        ptr->_errno = EINVAL;
+        return -1;
+    }
+
+    ret = sys_stat(file, st);
+    if (ret < 0) {
+        ptr->_errno = -ret;
+        return -1;
+    }
+}
+
+
+int chmod(const char *path, mode_t mode) {
+  // TODO
+  return -1;
+}
+
+int fchmod(int filedes, mode_t mode) {
+  // TODO
+  return -1;
+}
+
+
+int _DEFUN (fstat, (filedes, st),
+        int filedes _AND
         struct stat *st)
 {
-	int ret;
+    return _fstat_r(_REENT, filedes, st);
+}
 
-	if (!file && ! st) {
-		ptr->_errno = EINVAL;
-		return -1;
-	}
+int _DEFUN (_fstat_r, (ptr, filedes, st),
+    struct _reent *ptr _AND
+    int filedes _AND
+    struct stat *st)
+{
+    int ret;
 
-	ret = sys_stat(file, st);
-	if (ret < 0) {
-		ptr->_errno = -ret;
-		return -1;
-	}
+    if (!file && ! st) {
+        ptr->_errno = EINVAL;
+        return -1;
+    }
 
-	return 0;
+    ret = sys_fstat(filedes, st);
+    if (ret < 0) {
+        ptr->_errno = -ret;
+        return -1;
+    }
+}
+
+
+int lstat(const char *path, struct stat *buf) {
+  // TODO
+  return -1;
+}
+
+int mkdir(const char *path, mode_t mode) {
+  // TODO
+  return -1;
+}
+
+int mkfifo(const char *path, mode_t mode) {
+  // TODO
+  return -1;
+}
+
+int stat(const char *path, struct stat *buf) {
+  // TODO
+  return -1;
+}
+
+mode_t umask(mode_t mode) {
+  // TODO
+  return -1;
 }
