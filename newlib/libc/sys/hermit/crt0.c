@@ -29,15 +29,13 @@
 #include <unistd.h>
 #include <getopt.h>
 
-int libc_sd = -1;
-
 extern int main(int argc, char** argv);
 extern void __libc_init_array(void);
 extern void __libc_fini_array (void);
 extern int _init_signal(void);
 extern char** environ;
 
-int libc_start(int argc, char** argv, char** env)
+void runtime_entry(int argc, char** argv, char** env)
 {
    int ret;
 
@@ -64,5 +62,5 @@ int libc_start(int argc, char** argv, char** env)
    exit(ret);
 
    /* we should never reach this point */
-   return 0;
+   while(1) {}
 }
