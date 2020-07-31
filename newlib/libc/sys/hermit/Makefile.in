@@ -86,7 +86,8 @@ am_lib_a_OBJECTS = lib_a-chown.$(OBJEXT) lib_a-clock_getres.$(OBJEXT) \
 	lib_a-symlink.$(OBJEXT) lib_a-sysconf.$(OBJEXT) \
 	lib_a-times.$(OBJEXT) lib_a-unlink.$(OBJEXT) \
 	lib_a-wait.$(OBJEXT) lib_a-write.$(OBJEXT) \
-	lib_a-makecontext.$(OBJEXT) lib_a-context.$(OBJEXT)
+	lib_a-makecontext.$(OBJEXT) lib_a-context.$(OBJEXT) \
+	lib_a-fsync.$(OBJEXT)
 lib_a_OBJECTS = $(am_lib_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp =
@@ -210,7 +211,7 @@ AUTOMAKE_OPTIONS = cygnus
 INCLUDES = $(NEWLIB_CFLAGS) $(CROSS_CFLAGS) $(TARGET_CFLAGS)
 AM_CCASFLAGS = $(INCLUDES)
 noinst_LIBRARIES = lib.a
-lib_a_SOURCES = chown.c clock_getres.c clock_gettime.c clock_nanosleep.c clock_settime.c close.c environ.c errno.c execve.c _exit.c fork.c fstat.c getpagesize.c getpid.c gettod.c isatty.c kill.c link.c lseek.c nanosleep.c open.c read.c readlink.c sbrk.c sched.c setitimer.c signal.c stat.c symlink.c sysconf.c times.c unlink.c wait.c write.c context.S makecontext.c
+lib_a_SOURCES = chown.c clock_getres.c clock_gettime.c clock_nanosleep.c clock_settime.c close.c environ.c errno.c execve.c _exit.c fork.c fstat.c fsync.c getpagesize.c getpid.c gettod.c isatty.c kill.c link.c lseek.c nanosleep.c open.c read.c readlink.c sbrk.c sched.c setitimer.c signal.c stat.c symlink.c sysconf.c times.c unlink.c wait.c write.c context.S makecontext.c
 lib_a_CCASFLAGS = $(AM_CCASFLAGS)
 lib_a_CFLAGS = $(AM_CFLAGS)
 ACLOCAL_AMFLAGS = -I ../../..
@@ -344,6 +345,12 @@ lib_a-fstat.o: fstat.c
 
 lib_a-fstat.obj: fstat.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-fstat.obj `if test -f 'fstat.c'; then $(CYGPATH_W) 'fstat.c'; else $(CYGPATH_W) '$(srcdir)/fstat.c'; fi`
+
+lib_a-fsync.o: fsync.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-fsync.o `test -f 'fsync.c' || echo '$(srcdir)/'`fsync.c
+
+lib_a-fsync.obj: fsync.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-fsync.obj `if test -f 'fsync.c'; then $(CYGPATH_W) 'fsync.c'; else $(CYGPATH_W) '$(srcdir)/fsync.c'; fi`
 
 lib_a-getpagesize.o: getpagesize.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-getpagesize.o `test -f 'getpagesize.c' || echo '$(srcdir)/'`getpagesize.c
