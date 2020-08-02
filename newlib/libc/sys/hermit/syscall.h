@@ -106,6 +106,7 @@ ssize_t sys_sbrk(ssize_t incr);
 int sys_open(const char* name, int flags, int mode);
 int sys_close(int fd);
 int sys_fsync(int fd);
+int sys_unlink(const char* name);
 void sys_acquire_putchar_lock(void);
 void sys_putchar(const unsigned char character);
 void sys_release_putchar_lock(void);

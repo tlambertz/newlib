@@ -41,6 +41,13 @@ unlink (const char *name)
 int
 _unlink_r (struct _reent *ptr, const char *name)
 {
-	ptr->_errno = ENOENT;
-	return -1;
+	int ret;
+
+	ret = sys_unlink(name);
+	if (ret < 0) {
+		ptr->_errno = -ret;
+		return -1;
+	}
+
+	return 0;
 }
